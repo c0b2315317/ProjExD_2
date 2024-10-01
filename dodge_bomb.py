@@ -1,6 +1,7 @@
 import os
 import random
 import sys
+import time
 import pygame as pg
 
 
@@ -12,6 +13,31 @@ DELTA = {
     pg.K_RIGHT: (+5, 0),
     }
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+
+def game_over(screen, kk_rct):
+    """ゲームオーバー時の画面を表示"""
+    # 画面全体を黒で塗りつぶす
+    blackout = pg.Surface((WIDTH, HEIGHT))
+    blackout.fill((0, 0, 0))
+    blackout.set_alpha(150)  # 半透明にする
+    screen.blit(blackout, (0, 0))
+
+    # 泣いているこうかとんの画像を表示
+    sad_kk_img = pg.transform.rotozoom(pg.image.load("fig/8.png"), 0, 0.9)
+    screen.blit(sad_kk_img, kk_rct)
+
+    # Game Overの文字を表示
+    font = pg.font.Font(None, 80)
+    text = font.render("Game Over", True, (255, 0, 0))
+    text_rct = text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+    screen.blit(text, text_rct)
+
+    # 画面更新
+    pg.display.update()
+
+    # 5秒間表示する
+    time.sleep(5)
 
 
 def check_bound(obj_rct: pg.Rect) -> tuple[bool, bool]:
@@ -51,7 +77,7 @@ def main():
         screen.blit(bg_img, [0, 0]) 
 
         if kk_rct.colliderect(bb_rct):  #こうかとんと爆弾が重なっていたら
-            print("GameOver")
+            game_over(screen,kk_rct)
             return
         key_lst = pg.key.get_pressed()
         sum_mv = [0, 0]
