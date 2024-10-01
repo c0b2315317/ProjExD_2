@@ -27,6 +27,7 @@ def check_bound(obj_rct: pg.Rect) -> tuple[bool, bool]:
         tate = False
     return yoko, tate
 
+
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -34,21 +35,21 @@ def main():
     kk_img = pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 0.9)
     kk_rct = kk_img.get_rect()
     kk_rct.center = 300, 200
-    bb_img = pg.Surface((20,20))
-    bb_img.set_colorkey((0, 0, 0))
+    bb_img = pg.Surface((20,20))  #空のSurface
+    bb_img.set_colorkey((0, 0, 0))  #爆弾の四隅を透過させる
     pg.draw.circle(bb_img,(255, 0, 0), (10, 10), 10)
-    bb_rct = bb_img.get_rect()
+    bb_rct = bb_img.get_rect()  #爆弾Rectの抽出
     bb_rct.centerx = random.randint(0, WIDTH)
     bb_rct.centery = random.randint(0, HEIGHT)
     vx, vy = +5, +5
     clock = pg.time.Clock()
     tmr = 0
-
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return
         screen.blit(bg_img, [0, 0]) 
+
         if kk_rct.colliderect(bb_rct):  #こうかとんと爆弾が重なっていたら
             print("GameOver")
             return
