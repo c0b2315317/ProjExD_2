@@ -15,6 +15,11 @@ DELTA = {
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
+def bomb():
+    
+
+
+
 def game_over(screen, kk_rct):
     """ゲームオーバー時の画面を表示"""
     # 画面全体を黒で塗りつぶす
@@ -35,7 +40,7 @@ def game_over(screen, kk_rct):
 
     # 画面更新
     pg.display.update()
-
+    
     # 5秒間表示する
     time.sleep(5)
 
